@@ -1,0 +1,64 @@
+databaseChangeLog:
+- changeSet:
+    id: 1
+    author: matt
+    changes:
+    - createTable:
+        tableName: orders
+        columns:
+        - column:
+            remarks: Order Unique ID
+            name: order_id
+            type: java.sql.Types.CHAR(36)
+            constraints:
+              primaryKey: true
+        - column:
+            remarks: Customer ID
+            name: customer_id
+            type: VARCHAR
+        - column:
+            remarks: Total Cost
+            name: cost
+            type: DECIMAL(10,2)
+    - createTable:
+        tableName: items
+        columns:
+        - column:
+            remarks: Item Unique ID
+            name: item_id
+            type: BIGINT
+            autoIncrement: true
+            constraints:
+              primaryKey: true
+        - column:
+            remarks: Order ID (FK)
+            name: order_id
+            type: java.sql.Types.CHAR(36)
+        - column:
+            remarks: Product ID
+            name: product_id
+            type: VARCHAR
+        - column:
+            remarks: Product Category
+            name: category
+            type: VARCHAR
+        - column:
+            remarks: Product Name
+            name: name
+            type: VARCHAR
+        - column:
+            remarks: Product Price
+            name: price
+            type: DECIMAL(10,2)
+        - column:
+            remarks: quantity
+            name: quantity
+            type: INT
+    - addForeignKeyConstraint:
+        baseColumnNames: order_id
+        baseTableName: items
+        constraintName: fk_items_orders
+        onDelete: CASCADE
+        onUpdate: RESTRICT
+        referencedColumnNames: order_id
+        referencedTableName: orders
